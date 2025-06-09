@@ -21,7 +21,6 @@ typedef struct Todo {
 
 // Function prototypes
 Todo* CreateNewTodo(int todoId, const char* title, const char* description);
-Todo* AddTodo(Todo* head);
 Todo* DeleteTodoByTodoId(Todo* head);
 void FindTodoByIndex(Todo* head);
 void PrintTodos(Todo* head);
@@ -62,53 +61,7 @@ Todo* CreateNewTodo(int todoId, const char* title, const char* description) {
     return newTodo;
 }
 
-/*
-  FUNCTION      : AddTodo
-  DESCRIPTION   : Gets input from the user, creates a new Todo, and adds it to the end of the list.
-  PARAMETERS    : Todo* head - Pointer to the current head of the list
-  RETURNS       : Todo* - Pointer to the new head (in case it was NULL before)
- */
-Todo* AddTodo(Todo* head) {
-    int id = 0;
-    char title[100] = "";
-    char desc[250] = "";
 
-    printf("Enter Todo ID: ");
-    if (scanf_s("%d", &id) != 1) {
-        printf("Invalid input.\n");
-        while (getchar() != '\n');
-        return head;
-    }
-    getchar();// clear newline
-
-    printf("Enter Title: ");
-    if (fgets(title, sizeof(title), stdin) == NULL) {
-        printf("Error reading title.\n");
-        return head;
-    }
-    title[strcspn(title, "\n")] = '\0'; //remove newline
-
-    printf("Enter Description: ");
-    if (fgets(desc, sizeof(desc), stdin) == NULL) {
-        printf("Error reading description.\n");
-        return head;
-    }
-    desc[strcspn(desc, "\n")] = '\0';
-
-    Todo* newTodo = CreateNewTodo(id, title, desc);
-
-    if (head == NULL) {
-        return newTodo;
-    }
-
-    Todo* current = head;
-    while (current->NextTodo != NULL) {
-        current = current->NextTodo;
-    }
-    current->NextTodo = newTodo;
-
-    return head;
-}
 
 /*
   FUNCTION      : DeleteTodoByTodoId
